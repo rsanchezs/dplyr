@@ -43,23 +43,6 @@ Después de la instalación es importante que lo carguemos en nuestra sesión __
 > library(dplyr)
 ```
 
-```
-
-Attaching package: 'dplyr'
-```
-
-```
-The following objects are masked from 'package:stats':
-
-    filter, lag
-```
-
-```
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union
-```
-
 
 Es posible que cuando carguemos el paquete nos aparezcan una serie de _warnings_, esto es debido que el paquete tiene funciones con el mismo nombre que en otros paquetes. Por el momento haremos caso omiso  a estos avisos.
 

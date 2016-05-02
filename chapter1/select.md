@@ -14,10 +14,7 @@ Installing package into 'C:/Users/Drube/Documents/R/win-library/3.2'
 ```
 
 ```
-package 'nycflights13' successfully unpacked and MD5 sums checked
-
-The downloaded binary packages are in
-	C:\Users\Drube\AppData\Local\Temp\Rtmpe0iD2t\downloaded_packages
+Warning: package 'nycflights13' is in use and will not be installed
 ```
 
 Para importar el conjunto de datos del paquete __nycflights13__ en __R__:

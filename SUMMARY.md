@@ -1,8 +1,7 @@
 # Summary
 This is the summary of my book.
 
-* [Manipulación de Data Frames con el paquete dplyr](chapter1/README.md)
-   * [Data frames](chapter1/dataframes.md)
+* [Manipulación de datos con dplyr](chapter1/README.md)
    * [El paquete dplyr](chapter1/dplyr.md)
    * [select()](chapter1/select.md)
    * [filter()](chapter1/filter.md)
