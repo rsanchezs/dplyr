@@ -1,0 +1,86 @@
+```{r knitsetup, echo=FALSE, results='hide', warning=FALSE, message=FALSE, cache=FALSE}
+opts_knit$set(base.dir='./', fig.path='', out.format='md')
+opts_chunk$set(prompt=TRUE, comment='', results='markup')
+# See yihui.name/knitr/options for more Knitr options.
+##### Put other setup R code here
+
+
+# end setup chunk
+```
+# select()
+
+Para los ejemplos en este capítulo utilizaremos un conjunto de datos relacionados con los vuelos en el año 2013 en la ciudad de Chicago.
+
+```{r}
+install.packages("nycflights13")
+
+```
+
+Para importar el conjunto de datos del paquete __nycflights13__ en __R__:
+
+```{r}
+library(nycflights13) ##Cargamos la libreria
+data(package = "nycflights13") ##Importamos los datos en R
+
+```
+
+Si queremos trabajar con un conjunto de datos del paquete tendremos que cargarlo en el entorno __R__. Por ejemplo, si queremos trabajar con el data frame __planes__:
+
+```{r}
+data("planes")
+
+```
+A continuación podemos realizar un examen preliminar del data frame:
+
+```{r}
+str(planes) ##Muestra la estrutura del data frame
+dim(planes) ## n x m
+names(planes) ##nombre de las variables
+?planes ##documentación del data frame
+
+```
+
+La función ___select()___ sirve para seleccionar una o varias columnas del data frame.
+
+```{r}
+select(planes, tailnum, year,type)
+
+
+```
+
+Podemos utilizar la notación __:__ para seleccionar un rango de columnas:
+
+```{r}
+select(planes, tailnum:type)
+
+```
+Podemos excluir una o varias columnas en nuestra selección del siguiente modo:
+
+```{r}
+select(planes, -tailnum)
+select(planes, -(tailnum:type))
+
+```
+
+La función __select()__ nos permite seleccionar un conjunto de columnas/variables según un patrón con la siguiente sintaxis:
+
+```{r}
+select(planes, starts_with("m"))
+select(planes, ends_with("e"))
+
+```
+
+A continuación mostramos un conjunto de funciones para __select__ que nos serán muy útiles:
+
+
++ __-__ : Selecciona todas las variables excepto
++ __:__ : Selecciona un rango
++ __contains()__ : Selecciona variables cuyo nombre contiene la cadena de texto
++ __ends_with()__: Selecciona variables cuyo nombre termina con la cadena de caracteres
++ __everything()__ : Selecciona todas las columnas
++ __matches()__: Selecciona las variables cuyos nombres coinciden con una expresión regular
++ __num_range()__: Selecciona las variables por posición
++ __one_of()__: Selecciona variables cuyos nombres están en un grupo de nombres
++ __start_with()__: Selecciona variables cuyos nombres empiezan con la cadena de caracteres.
+
+
