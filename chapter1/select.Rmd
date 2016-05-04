@@ -11,7 +11,7 @@ opts_chunk$set(prompt=TRUE, comment='', results='markup')
 
 Para los ejemplos en este capítulo utilizaremos un conjunto de datos relacionados con los vuelos en el año 2013 en la ciudad de Chicago.
 
-```{r}
+```{r echo=FALSE}
 install.packages("nycflights13")
 
 ```
