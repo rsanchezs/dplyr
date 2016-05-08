@@ -127,4 +127,4 @@ storms %>%
 > El atajo de teclado para el operador __%>%__ es  
 
 
-    ![](pipelineShortcut.PNG)
+![](pipelineShortcut.PNG)
