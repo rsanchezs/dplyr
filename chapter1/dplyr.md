@@ -52,9 +52,17 @@ library(dplyr)
 
 Es posible que cuando carguemos el paquete nos aparezcan una serie de _warnings_, esto es debido que el paquete tiene funciones con el mismo nombre que en otros paquetes. Por el momento haremos caso omiso  a estos avisos.
 
-Recomiendamos consultar la documentación de las funciones:
+Recomendamos consultar la documentación de las funciones:
 
 
+```r
+?select
+?filter
+?arrange
+?mutate
+?summarise
+?group_by
+```
 
 
 
