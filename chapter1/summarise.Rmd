@@ -1,0 +1,71 @@
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##  Summarise
+
+La función __summarise()__ funciona de forma análoga a la función [mutate](mutate.md), excepto que en lugar de añadir nuevas columnas crea un nuevo data frame.  
+
+
+Así por ejemplo, ara calcular la mediana y la varianza de la variable _amount_ en el conjunto de datos _pollution_:  
+
+![](summarise.PNG)  
+
+Echemos un vistazo al data frame __pollution__:  
+
+```{r}
+pollution
+
+```  
+
+Para obtener un resumen con la mediana y la varianza de la variable __amount__ podemos hacer lo siguiente:  
+
+```{r}
+summarise(pollution, mediana = median(amount), variance = var(amount))
+
+```
+
+
+
+Podemos utilizar el operador %>%, 
+
+![](summarise1.PNG)  
+
+
+```{r}
+pollution %>% summarise(mediana = median(amount), variance = var(amount))
+
+```  
+
+Obsérvese que las dos formas de hacerlo devuelven el mismo resultado.  
+
+
+
+A continuación se muestran funciones que trabajando conjuntamente con la función __summarise()__ facilitarán nuestro trabajo diario. Las primeras pertenecen al paquete base y las otras son del paquete dplyr. Todas ellas toman como argumento un vector y devuelven un único resultado.  
+
+  
+  
+
+|    | base |
+| :---: | :---: |
+| min(), max() | Valores max y min |
+| mean() | media   |
+| median()| mediana |
+| sum() | suma de los valores  |
+| var, sd()  | varianza y desviación típica |  
+
+
+
+  
+
+|      | dplyr |
+| :---: | :---: |
+| first() | primer valor en un vector |
+| last() | el último valor en un vector |
+| n() | el número de valores en un vector |
+| n_distinct() | el número de valores distintos en un vector |
+| nth() | Extrar el valor que ocupa la posición _n_ en un vector |  
+
+

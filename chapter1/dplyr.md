@@ -1,4 +1,10 @@
 
+# El paquete dplyr
+
+El paquete __dplyr__ fue desarrollado por Hadley Wickham de RStudio y es un versión optimizada de su paquete __plyr__. El paquete __dplyr__ no proporciona ninguna nueva funcionalidad a __R__ per se, en el sentido que todo aquello que podemos hacer con __dplyr__ lo podríamos hacer con la sintaxis básica de __R__.
+
+Una importante contribución del paquete __dplyr__ es que proporciona una "gramática" (particularmente verbos) para la manipulación y operaciones con data frames. Con esta gramática podemos comunicar mediante nuestro código que es lo que estamos haciendo en los data frames a otras personas (asumiendo que conozcan la gramática). Esto es muy útil, ya que proporciona una abstracción que anteriormente no existía. Por último, cabe destacar que las funciones del paquete __dplyr__ son muy rápidas, puesto que están implementadas con el lenguaje C++.
+
 # La grámatica de dplyr
 
 Algunas de los principales "verbos" del paquete __dplyr__ son:
@@ -40,11 +46,23 @@ Después de la instalación es importante que lo carguemos en nuestra sesión __
 
 
 ```r
-> library(dplyr)
+library(dplyr)
 ```
 
 
 Es posible que cuando carguemos el paquete nos aparezcan una serie de _warnings_, esto es debido que el paquete tiene funciones con el mismo nombre que en otros paquetes. Por el momento haremos caso omiso  a estos avisos.
+
+Recomiendamos consultar la documentación de las funciones:
+
+
+
+
+
+
+
+
+
+
 
 
 

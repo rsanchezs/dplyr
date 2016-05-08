@@ -8,3 +8,50 @@ opts_chunk$set(prompt=TRUE, comment='', results='markup')
 # end setup chunk
 ```
 # mutate()
+
+Con la función __mutate()__ podemos computar tranformaciones de variables en un data frame. A menudo, tendremos la necesidad de crear nuevas variables que se calculan a partir de variables existentes,__mutate()__ nos proporciona una interface clara para realizar este tipo de operaciones.  
+
+
+Así por ejemplo si deseamos calcular el ratio entre _pressure_ y _wind_:  
+![](mutate.PNG)  
+
+Echemos un vistazo al data frame __storms__:
+
+
+```{r}
+storms
+
+
+```  
+
+A continuación podemos crear una nueva varible __ratio__ con el ratio entre la presión y el viento:  
+
+```{r}
+mutate(storms, ratio = pressure/wind)
+
+```
+
+
+La función __mutate()__ nos permite encadenar varias expresiones en una misma sentencia: 
+
+![](mutate1.PNG)  
+
+
+
+```{r}
+mutate(storms, ratio=pressure/wind, inverse=ratio^-1)
+
+```  
+
+
+Podemos utilizar funciones de otros paquetes como resultado de una nueva columna/variable, así por ejemplo si queremos calcular la _distribución de frecuencias absolutas acumuladas_ de la variable _wind_ podríamos utilizar la función _cumsum()_ del paquete _bas_:  
+
+
+```{r}
+mutate(storms, freq.acumulative = cumsum(wind))
+
+```  
+
+
+
+

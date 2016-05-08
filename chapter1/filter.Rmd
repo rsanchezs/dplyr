@@ -8,3 +8,74 @@ opts_chunk$set(prompt=TRUE, comment='', results='markup')
 # end setup chunk
 ```
 # filter()
+
+La función __filter__ nos permite filtrar filas según una condición:  
+
+
+
+![](filter.PNG)  
+
+
+```{r}
+filter(storms, wind >= 50)
+
+```  
+
+
+
+Se pueden incluir varias condiciones en un mismo filtro: 
+
+
+![](filter1.PNG)  
+
+
+
+```{r}
+filter(storms, wind >= 50, storm %in% c("Alberto", "Alex", "Allison"))
+
+```  
+
+
+  
+  
+Las condiciones pueden ser expresiones logicas construidas mediante los operadores relacionales y lógicos:  
+
+
+
+|     |  ?Comparison |
+| :---: | :---: |
+| < | Menor que |
+| > | Mayor que |
+| == | Igual que |
+| <= | Menor o igual que |
+| >= | Mayor o igual que |
+| != | Diferente que |
+| %in% | Pertenece al conjunto |
+| is.na | Es NA |
+| !is.na | No es NA |  
+
+
+
+
+|      | ?base::Logic |
+| :---: | :---: |
+| & | boolean and |
+| \|  boolean o |
+| xor | or inclusivo |
+| ! | not |
+| any | cualquiera true |
+| all | todos verdaderos |  
+
+
+
+
+Así por ejemplo, el siguiente ejemplo filtra aquellas filas con un __wind >= 50__ y __pressure < 1010__:  
+
+
+```{r}
+
+filter(storms, wind>=50 & pressure<1010)
+
+```  
+
+

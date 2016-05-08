@@ -1,233 +1,266 @@
 
 # select()
 
-Para los ejemplos en este capítulo utilizaremos un conjunto de datos relacionados con los vuelos en el año 2013 en la ciudad de Chicago.
+Lo primero sera instalar el paquete con el conjunto de datos que utilizaremos para los ejemplos:  
 
-
-```r
-> install.packages("nycflights13")
-```
-
-```
-Installing package into 'C:/Users/Drube/Documents/R/win-library/3.2'
-(as 'lib' is unspecified)
-```
-
-```
-Warning: package 'nycflights13' is in use and will not be installed
-```
-
-Para importar el conjunto de datos del paquete __nycflights13__ en __R__:
 
 
 ```r
-> library(nycflights13) ##Cargamos la libreria
-> data(package = "nycflights13") ##Importamos los datos en R
+install.packages("devtools")
+devtools::install_github("rstudio/EDAWR")
 ```
 
-Si queremos trabajar con un conjunto de datos del paquete tendremos que cargarlo en el entorno __R__. Por ejemplo, si queremos trabajar con el data frame __planes__:
+
+Tendremos que cargar la libreria para poder utilizarla:  
+
 
 
 ```r
-> data("planes")
+library(EDAWR)
 ```
-A continuación podemos realizar un examen preliminar del data frame:
+
+
+Podemos echar un vistazo al conjunto de datos mediante __?__ or el comando __Viem()__:  
+
 
 
 ```r
-> str(planes) ##Muestra la estrutura del data frame
+?storms
+?cases
+?pollution
+?tb
+View(storms)
+View(cases)
+View(pollution)
+View(tb)
 ```
 
-```
-Classes 'tbl_df', 'tbl' and 'data.frame':	3322 obs. of  9 variables:
- $ tailnum     : chr  "N10156" "N102UW" "N103US" "N104UW" ...
- $ year        : int  2004 1998 1999 1999 2002 1999 1999 1999 1999 1999 ...
- $ type        : chr  "Fixed wing multi engine" "Fixed wing multi engine" "Fixed wing multi engine" "Fixed wing multi engine" ...
- $ manufacturer: chr  "EMBRAER" "AIRBUS INDUSTRIE" "AIRBUS INDUSTRIE" "AIRBUS INDUSTRIE" ...
- $ model       : chr  "EMB-145XR" "A320-214" "A320-214" "A320-214" ...
- $ engines     : int  2 2 2 2 2 2 2 2 2 2 ...
- $ seats       : int  55 182 182 182 55 182 182 182 182 182 ...
- $ speed       : int  NA NA NA NA NA NA NA NA NA NA ...
- $ engine      : chr  "Turbo-fan" "Turbo-fan" "Turbo-fan" "Turbo-fan" ...
-```
 
-```r
-> dim(planes) ## n x m
-```
+Con la función select podemos seleccionar columnas de un data frame:  
 
-```
-[1] 3322    9
-```
 
-```r
-> names(planes) ##nombre de las variables
-```
+![](select.PNG)  
 
-```
-[1] "tailnum"      "year"         "type"         "manufacturer"
-[5] "model"        "engines"      "seats"        "speed"       
-[9] "engine"      
-```
+Visualizamos el contenido del data frame __storms__:
 
-```r
-> ?planes ##documentación del data frame
-```
-
-La función ___select()___ sirve para seleccionar una o varias columnas del data frame.
 
 
 ```r
-> select(planes, tailnum, year,type)
+storms
 ```
 
 ```
-Source: local data frame [3,322 x 3]
-
-   tailnum  year                    type
-     (chr) (int)                   (chr)
-1   N10156  2004 Fixed wing multi engine
-2   N102UW  1998 Fixed wing multi engine
-3   N103US  1999 Fixed wing multi engine
-4   N104UW  1999 Fixed wing multi engine
-5   N10575  2002 Fixed wing multi engine
-6   N105UW  1999 Fixed wing multi engine
-7   N107US  1999 Fixed wing multi engine
-8   N108UW  1999 Fixed wing multi engine
-9   N109UW  1999 Fixed wing multi engine
-10  N110UW  1999 Fixed wing multi engine
-..     ...   ...                     ...
+## Source: local data frame [6 x 4]
+## 
+##     storm  wind pressure       date
+##     (chr) (int)    (int)     (date)
+## 1 Alberto   110     1007 2000-08-03
+## 2    Alex    45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4     Ana    40     1013 1997-06-30
+## 5  Arlene    50     1010 1999-06-11
+## 6  Arthur    45     1010 1996-06-17
 ```
 
-Podemos utilizar la notación __:__ para seleccionar un rango de columnas:
+Para seleccionar las variables __storm__ y __pressure__ del data frame ejecutaremos la siguiente instrucción:  
 
 
 ```r
-> select(planes, tailnum:type)
+select(storms, storm, pressure)
 ```
 
 ```
-Source: local data frame [3,322 x 3]
-
-   tailnum  year                    type
-     (chr) (int)                   (chr)
-1   N10156  2004 Fixed wing multi engine
-2   N102UW  1998 Fixed wing multi engine
-3   N103US  1999 Fixed wing multi engine
-4   N104UW  1999 Fixed wing multi engine
-5   N10575  2002 Fixed wing multi engine
-6   N105UW  1999 Fixed wing multi engine
-7   N107US  1999 Fixed wing multi engine
-8   N108UW  1999 Fixed wing multi engine
-9   N109UW  1999 Fixed wing multi engine
-10  N110UW  1999 Fixed wing multi engine
-..     ...   ...                     ...
+## Source: local data frame [6 x 2]
+## 
+##     storm pressure
+##     (chr)    (int)
+## 1 Alberto     1007
+## 2    Alex     1009
+## 3 Allison     1005
+## 4     Ana     1013
+## 5  Arlene     1010
+## 6  Arthur     1010
 ```
-Podemos excluir una o varias columnas en nuestra selección del siguiente modo:
+
+
+Con el guión __-__ podemos excluir una columna:  
+
+
+![](select1.PNG)  
+
 
 
 ```r
-> select(planes, -tailnum)
+select(storms, -storm)
 ```
 
 ```
-Source: local data frame [3,322 x 8]
-
-    year                    type     manufacturer     model engines seats
-   (int)                   (chr)            (chr)     (chr)   (int) (int)
-1   2004 Fixed wing multi engine          EMBRAER EMB-145XR       2    55
-2   1998 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-3   1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-4   1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-5   2002 Fixed wing multi engine          EMBRAER EMB-145LR       2    55
-6   1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-7   1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-8   1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-9   1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-10  1999 Fixed wing multi engine AIRBUS INDUSTRIE  A320-214       2   182
-..   ...                     ...              ...       ...     ...   ...
-Variables not shown: speed (int), engine (chr)
+## Source: local data frame [6 x 3]
+## 
+##    wind pressure       date
+##   (int)    (int)     (date)
+## 1   110     1007 2000-08-03
+## 2    45     1009 1998-07-27
+## 3    65     1005 1995-06-03
+## 4    40     1013 1997-06-30
+## 5    50     1010 1999-06-11
+## 6    45     1010 1996-06-17
 ```
 
-```r
-> select(planes, -(tailnum:type))
-```
 
-```
-Source: local data frame [3,322 x 6]
+Podemos utilizar la notación __:__ para seleccionar un rango de columnas:  
 
-       manufacturer     model engines seats speed    engine
-              (chr)     (chr)   (int) (int) (int)     (chr)
-1           EMBRAER EMB-145XR       2    55    NA Turbo-fan
-2  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-3  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-4  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-5           EMBRAER EMB-145LR       2    55    NA Turbo-fan
-6  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-7  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-8  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-9  AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-10 AIRBUS INDUSTRIE  A320-214       2   182    NA Turbo-fan
-..              ...       ...     ...   ...   ...       ...
-```
 
-La función __select()__ nos permite seleccionar un conjunto de columnas/variables según un patrón con la siguiente sintaxis:
+![](select2.PNG)  
+
 
 
 ```r
-> select(planes, starts_with("m"))
+select(storms, wind:date)
 ```
 
 ```
-Source: local data frame [3,322 x 2]
-
-       manufacturer     model
-              (chr)     (chr)
-1           EMBRAER EMB-145XR
-2  AIRBUS INDUSTRIE  A320-214
-3  AIRBUS INDUSTRIE  A320-214
-4  AIRBUS INDUSTRIE  A320-214
-5           EMBRAER EMB-145LR
-6  AIRBUS INDUSTRIE  A320-214
-7  AIRBUS INDUSTRIE  A320-214
-8  AIRBUS INDUSTRIE  A320-214
-9  AIRBUS INDUSTRIE  A320-214
-10 AIRBUS INDUSTRIE  A320-214
-..              ...       ...
+## Source: local data frame [6 x 3]
+## 
+##    wind pressure       date
+##   (int)    (int)     (date)
+## 1   110     1007 2000-08-03
+## 2    45     1009 1998-07-27
+## 3    65     1005 1995-06-03
+## 4    40     1013 1997-06-30
+## 5    50     1010 1999-06-11
+## 6    45     1010 1996-06-17
 ```
+
+
+Utilizando los operadores __-__ y __:__ de forma conjunta  podemos hacer cosas como estas:  
+
+
 
 ```r
-> select(planes, ends_with("e"))
+select(storms, -(storm:wind))
 ```
 
 ```
-Source: local data frame [3,322 x 2]
-
-                      type    engine
-                     (chr)     (chr)
-1  Fixed wing multi engine Turbo-fan
-2  Fixed wing multi engine Turbo-fan
-3  Fixed wing multi engine Turbo-fan
-4  Fixed wing multi engine Turbo-fan
-5  Fixed wing multi engine Turbo-fan
-6  Fixed wing multi engine Turbo-fan
-7  Fixed wing multi engine Turbo-fan
-8  Fixed wing multi engine Turbo-fan
-9  Fixed wing multi engine Turbo-fan
-10 Fixed wing multi engine Turbo-fan
-..                     ...       ...
+## Source: local data frame [6 x 2]
+## 
+##   pressure       date
+##      (int)     (date)
+## 1     1007 2000-08-03
+## 2     1009 1998-07-27
+## 3     1005 1995-06-03
+## 4     1013 1997-06-30
+## 5     1010 1999-06-11
+## 6     1010 1996-06-17
 ```
 
-A continuación mostramos un conjunto de funciones para __select__ que nos serán muy útiles:
+
+El paquete dplyr proporciona una serie de funciones que nos pueden facilitar mucho nuestro trabajo, como por ejemplo:  
 
 
-+ __-__ : Selecciona todas las variables excepto
-+ __:__ : Selecciona un rango
-+ __contains()__ : Selecciona variables cuyo nombre contiene la cadena de texto
-+ __ends_with()__: Selecciona variables cuyo nombre termina con la cadena de caracteres
-+ __everything()__ : Selecciona todas las columnas
-+ __matches()__: Selecciona las variables cuyos nombres coinciden con una expresión regular
-+ __num_range()__: Selecciona las variables por posición
-+ __one_of()__: Selecciona variables cuyos nombres están en un grupo de nombres
-+ __start_with()__: Selecciona variables cuyos nombres empiezan con la cadena de caracteres.
+
+```r
+#Selecciona columnas cuyo nombre contiene un string
+select(storms,starts_with("w"))
+```
+
+```
+## Source: local data frame [6 x 1]
+## 
+##    wind
+##   (int)
+## 1   110
+## 2    45
+## 3    65
+## 4    40
+## 5    50
+## 6    45
+```
+
+
+
+```r
+#Selecciona columnas cuyo nombre termina con un string
+select(storms, ends_with("e"))
+```
+
+```
+## Source: local data frame [6 x 2]
+## 
+##   pressure       date
+##      (int)     (date)
+## 1     1007 2000-08-03
+## 2     1009 1998-07-27
+## 3     1005 1995-06-03
+## 4     1013 1997-06-30
+## 5     1010 1999-06-11
+## 6     1010 1996-06-17
+```
+
+
+
+```r
+#Selecciona todas las columnas
+select(storms, everything())
+```
+
+```
+## Source: local data frame [6 x 4]
+## 
+##     storm  wind pressure       date
+##     (chr) (int)    (int)     (date)
+## 1 Alberto   110     1007 2000-08-03
+## 2    Alex    45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4     Ana    40     1013 1997-06-30
+## 5  Arlene    50     1010 1999-06-11
+## 6  Arthur    45     1010 1996-06-17
+```
+
+
+
+```r
+#Selecciona columnas cuyo nombres contienen un string
+select(storms, contains("essure"))
+```
+
+```
+## Source: local data frame [6 x 1]
+## 
+##   pressure
+##      (int)
+## 1     1007
+## 2     1009
+## 3     1005
+## 4     1013
+## 5     1010
+## 6     1010
+```
+
+
+
+
+A continuación mostramos un resumen de las funciones para __select__ que nos serán muy útiles:  
+
+
+
+|        | *A partir de la tercera fila son funciones propias del paquete dply |
+| :---: | :---: |
+| __-__ | Selecciona todas las variables excepto|
+| __:__ | Selecciona un rango |
+| __contains()__ | Selecciona variables cuyo nombre contiene la cadena de texto |
+| __ends_with()__ | Selecciona variables cuyo nombre termina con la cadena de caracteres |
+| __everything()__ | Selecciona todas las columnas |
+| __matches()__ | Selecciona las variables cuyos nombres coinciden con una expresión regular |
+| __num_range()__ | Selecciona las variables por posición |
+| __one_of()__ | Selecciona variables cuyos nombres están en un grupo de nombres |
+| __start_with()__ | Selecciona variables cuyos nombres empiezan con la cadena de caracteres |
+
+
+
+
+
+
+
 
 
