@@ -64,7 +64,7 @@
 <h1>
 <a id="argumentos-comúnes-en-las-funciones-dplyr" class="anchor" href="#argumentos-com%C3%BAnes-en-las-funciones-dplyr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Argumentos comúnes en las funciones dplyr</h1>
 
-<p>Todas las funciones que discutiremos en este curso tienen en común una serie de argumentos. En particular,</p>
+<p>Todas las funciones que discutiremos en este capítulo tienen en común una serie de argumentos. En particular,</p>
 
 <ol>
 <li>El primer argumento es el data frame</li>
@@ -96,7 +96,7 @@ install_github("hadley/dplyr")
 
 <p>Es posible que cuando carguemos el paquete nos aparezcan una serie de <em>warnings</em>, esto es debido que el paquete tiene funciones con el mismo nombre que en otros paquetes. Por el momento haremos caso omiso  a estos avisos.</p>
 
-<p>Recomendamos consultar la documentación de las funciones:</p>
+<p>Recomiendamos consultar la documentación de las funciones:</p>
 
 <div class="highlight highlight-source-r"><pre>?<span class="pl-smi">select</span>
 ?<span class="pl-smi">filter</span>
@@ -104,6 +104,800 @@ install_github("hadley/dplyr")
 ?<span class="pl-smi">mutate</span>
 ?<span class="pl-smi">summarise</span>
 ?<span class="pl-smi">group_by</span></pre></div>
+
+<h1>
+<a id="select" class="anchor" href="#select" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>select()</h1>
+
+<p>Lo primero sera instalar el paquete con el conjunto de datos que utilizaremos para los ejemplos:  </p>
+
+<div class="highlight highlight-source-r"><pre>install.packages(<span class="pl-s"><span class="pl-pds">"</span>devtools<span class="pl-pds">"</span></span>)
+<span class="pl-e">devtools</span><span class="pl-k">::</span>install_github(<span class="pl-s"><span class="pl-pds">"</span>rstudio/EDAWR<span class="pl-pds">"</span></span>)</pre></div>
+
+<p>Tendremos que cargar la libreria para poder utilizarla:  </p>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">EDAWR</span>)</pre></div>
+
+<p>Podemos echar un vistazo al conjunto de datos mediante <strong>?</strong> or el comando <strong>Viem()</strong>:  </p>
+
+<div class="highlight highlight-source-r"><pre>?<span class="pl-smi">storms</span>
+?<span class="pl-smi">cases</span>
+?<span class="pl-smi">pollution</span>
+?<span class="pl-smi">tb</span>
+View(<span class="pl-smi">storms</span>)
+View(<span class="pl-smi">cases</span>)
+View(<span class="pl-smi">pollution</span>)
+View(<span class="pl-smi">tb</span>)</pre></div>
+
+<p>Con la función select podemos seleccionar columnas de un data frame:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/select.PNG" alt="">  </p>
+
+<p>Visualizamos el contenido del data frame <strong>storms</strong>:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">storms</span></pre></div>
+
+<pre><code>## Source: local data frame [6 x 4]
+## 
+##     storm  wind pressure       date
+##     (chr) (int)    (int)     (date)
+## 1 Alberto   110     1007 2000-08-03
+## 2    Alex    45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4     Ana    40     1013 1997-06-30
+## 5  Arlene    50     1010 1999-06-11
+## 6  Arthur    45     1010 1996-06-17
+</code></pre>
+
+<p>Para seleccionar las variables <strong>storm</strong> y <strong>pressure</strong> del data frame ejecutaremos la siguiente instrucción:  </p>
+
+<div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-smi">storm</span>, <span class="pl-smi">pressure</span>)</pre></div>
+
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##     storm pressure
+##     (chr)    (int)
+## 1 Alberto     1007
+## 2    Alex     1009
+## 3 Allison     1005
+## 4     Ana     1013
+## 5  Arlene     1010
+## 6  Arthur     1010
+</code></pre>
+
+<p>Con el guión <strong>-</strong> podemos excluir una columna:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/select1.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-k">-</span><span class="pl-smi">storm</span>)</pre></div>
+
+<pre><code>## Source: local data frame [6 x 3]
+## 
+##    wind pressure       date
+##   (int)    (int)     (date)
+## 1   110     1007 2000-08-03
+## 2    45     1009 1998-07-27
+## 3    65     1005 1995-06-03
+## 4    40     1013 1997-06-30
+## 5    50     1010 1999-06-11
+## 6    45     1010 1996-06-17
+</code></pre>
+
+<p>Podemos utilizar la notación <strong>:</strong> para seleccionar un rango de columnas:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/select2.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span><span class="pl-k">:</span><span class="pl-smi">date</span>)</pre></div>
+
+<pre><code>## Source: local data frame [6 x 3]
+## 
+##    wind pressure       date
+##   (int)    (int)     (date)
+## 1   110     1007 2000-08-03
+## 2    45     1009 1998-07-27
+## 3    65     1005 1995-06-03
+## 4    40     1013 1997-06-30
+## 5    50     1010 1999-06-11
+## 6    45     1010 1996-06-17
+</code></pre>
+
+<p>Utilizando los operadores <strong>-</strong> y <strong>:</strong> de forma conjunta  podemos hacer cosas como estas:  </p>
+
+<div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-k">-</span>(<span class="pl-smi">storm</span><span class="pl-k">:</span><span class="pl-smi">wind</span>))</pre></div>
+
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##   pressure       date
+##      (int)     (date)
+## 1     1007 2000-08-03
+## 2     1009 1998-07-27
+## 3     1005 1995-06-03
+## 4     1013 1997-06-30
+## 5     1010 1999-06-11
+## 6     1010 1996-06-17
+</code></pre>
+
+<p>El paquete dplyr proporciona una serie de funciones que nos pueden facilitar mucho nuestro trabajo, como por ejemplo:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">#Selecciona columnas cuyo nombre contiene un string</span>
+select(<span class="pl-smi">storms</span>,starts_with(<span class="pl-s"><span class="pl-pds">"</span>w<span class="pl-pds">"</span></span>))</pre></div>
+
+<pre><code>## Source: local data frame [6 x 1]
+## 
+##    wind
+##   (int)
+## 1   110
+## 2    45
+## 3    65
+## 4    40
+## 5    50
+## 6    45
+</code></pre>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">#Selecciona columnas cuyo nombre termina con un string</span>
+select(<span class="pl-smi">storms</span>, ends_with(<span class="pl-s"><span class="pl-pds">"</span>e<span class="pl-pds">"</span></span>))</pre></div>
+
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##   pressure       date
+##      (int)     (date)
+## 1     1007 2000-08-03
+## 2     1009 1998-07-27
+## 3     1005 1995-06-03
+## 4     1013 1997-06-30
+## 5     1010 1999-06-11
+## 6     1010 1996-06-17
+</code></pre>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">#Selecciona todas las columnas</span>
+select(<span class="pl-smi">storms</span>, everything())</pre></div>
+
+<pre><code>## Source: local data frame [6 x 4]
+## 
+##     storm  wind pressure       date
+##     (chr) (int)    (int)     (date)
+## 1 Alberto   110     1007 2000-08-03
+## 2    Alex    45     1009 1998-07-27
+## 3 Allison    65     1005 1995-06-03
+## 4     Ana    40     1013 1997-06-30
+## 5  Arlene    50     1010 1999-06-11
+## 6  Arthur    45     1010 1996-06-17
+</code></pre>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c">#Selecciona columnas cuyo nombres contienen un string</span>
+select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span class="pl-pds">"</span>essure<span class="pl-pds">"</span></span>))</pre></div>
+
+<pre><code>## Source: local data frame [6 x 1]
+## 
+##   pressure
+##      (int)
+## 1     1007
+## 2     1009
+## 3     1005
+## 4     1013
+## 5     1010
+## 6     1010
+</code></pre>
+
+<p>A continuación mostramos un resumen de las funciones para <strong>select</strong> que nos serán muy útiles:  </p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">*A partir de la tercera fila son funciones propias del paquete dply</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>-</strong></td>
+<td align="center">Selecciona todas las variables excepto</td>
+</tr>
+<tr>
+<td align="center"><strong>:</strong></td>
+<td align="center">Selecciona un rango</td>
+</tr>
+<tr>
+<td align="center"><strong>contains()</strong></td>
+<td align="center">Selecciona variables cuyo nombre contiene la cadena de texto</td>
+</tr>
+<tr>
+<td align="center"><strong>ends_with()</strong></td>
+<td align="center">Selecciona variables cuyo nombre termina con la cadena de caracteres</td>
+</tr>
+<tr>
+<td align="center"><strong>everything()</strong></td>
+<td align="center">Selecciona todas las columnas</td>
+</tr>
+<tr>
+<td align="center"><strong>matches()</strong></td>
+<td align="center">Selecciona las variables cuyos nombres coinciden con una expresión regular</td>
+</tr>
+<tr>
+<td align="center"><strong>num_range()</strong></td>
+<td align="center">Selecciona las variables por posición</td>
+</tr>
+<tr>
+<td align="center"><strong>one_of()</strong></td>
+<td align="center">Selecciona variables cuyos nombres están en un grupo de nombres</td>
+</tr>
+<tr>
+<td align="center"><strong>start_with()</strong></td>
+<td align="center">Selecciona variables cuyos nombres empiezan con la cadena de caracteres</td>
+</tr>
+</tbody>
+</table>
+
+<h1>
+<a id="filter" class="anchor" href="#filter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>filter()</h1>
+
+<p>La función <strong>filter</strong> nos permite filtrar filas según una condición:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/filter.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> filter(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">50</span>)</pre></div>
+
+<pre><code>Source: local data frame [3 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2 Allison    65     1005 1995-06-03
+3  Arlene    50     1010 1999-06-11
+</code></pre>
+
+<p>Se pueden incluir varias condiciones en un mismo filtro: </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/filter1.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> filter(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">50</span>, <span class="pl-smi">storm</span> <span class="pl-k">%in%</span> c(<span class="pl-s"><span class="pl-pds">"</span>Alberto<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Alex<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Allison<span class="pl-pds">"</span></span>))</pre></div>
+
+<pre><code>Source: local data frame [2 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2 Allison    65     1005 1995-06-03
+</code></pre>
+
+<p>Las condiciones pueden ser expresiones logicas construidas mediante los operadores relacionales y lógicos:  </p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">?Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">Menor que</td>
+</tr>
+<tr>
+<td align="center">&gt;</td>
+<td align="center">Mayor que</td>
+</tr>
+<tr>
+<td align="center">==</td>
+<td align="center">Igual que</td>
+</tr>
+<tr>
+<td align="center">&lt;=</td>
+<td align="center">Menor o igual que</td>
+</tr>
+<tr>
+<td align="center">&gt;=</td>
+<td align="center">Mayor o igual que</td>
+</tr>
+<tr>
+<td align="center">!=</td>
+<td align="center">Diferente que</td>
+</tr>
+<tr>
+<td align="center">%in%</td>
+<td align="center">Pertenece al conjunto</td>
+</tr>
+<tr>
+<td align="center">is.na</td>
+<td align="center">Es NA</td>
+</tr>
+<tr>
+<td align="center">!is.na</td>
+<td align="center">No es NA</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">?base::Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">&amp;</td>
+<td align="center">boolean and</td>
+</tr>
+<tr>
+<td align="center">|  boolean o</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">xor</td>
+<td align="center">or inclusivo</td>
+</tr>
+<tr>
+<td align="center">!</td>
+<td align="center">not</td>
+</tr>
+<tr>
+<td align="center">any</td>
+<td align="center">cualquiera true</td>
+</tr>
+<tr>
+<td align="center">all</td>
+<td align="center">todos verdaderos</td>
+</tr>
+</tbody>
+</table>
+
+<p>Así por ejemplo, el siguiente ejemplo filtra aquellas filas con un <strong>wind &gt;= 50</strong> y <strong>pressure &lt; 1010</strong>:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> filter(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span><span class="pl-k">&gt;</span><span class="pl-k">=</span><span class="pl-c1">50</span> <span class="pl-k">&amp;</span> <span class="pl-smi">pressure</span><span class="pl-k">&lt;</span><span class="pl-c1">1010</span>)</pre></div>
+
+<pre><code>Source: local data frame [2 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2 Allison    65     1005 1995-06-03
+</code></pre>
+
+<h1>
+<a id="arrange" class="anchor" href="#arrange" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>arrange()</h1>
+
+<p>La función <strong>arrange()</strong> se utiliza para ordenar las filas de un data frame de acuerdo a una o varias columnas/variables.  </p>
+
+<p>Por defecto <strong>arrange()</strong> ordena las filas por orden ascendente:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/arrange.PNG" alt="">  </p>
+
+<p>Echemos un vistazo al data frame <strong>arrange</strong>:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">storms</span></pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2    Alex    45     1009 1998-07-27
+3 Allison    65     1005 1995-06-03
+4     Ana    40     1013 1997-06-30
+5  Arlene    50     1010 1999-06-11
+6  Arthur    45     1010 1996-06-17
+</code></pre>
+
+<p>Para ordenar las filas por la variable <strong>wind</strong> de forma ascendente podemos hacer lo siguiente:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> arrange(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span>)</pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1     Ana    40     1013 1997-06-30
+2    Alex    45     1009 1998-07-27
+3  Arthur    45     1010 1996-06-17
+4  Arlene    50     1010 1999-06-11
+5 Allison    65     1005 1995-06-03
+6 Alberto   110     1007 2000-08-03
+</code></pre>
+
+<p>Si las queremos ordenar de forma ascendente lo haremos del siguiente modo:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/arrange1.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> arrange(<span class="pl-smi">storms</span>, desc(<span class="pl-smi">wind</span>))</pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2 Allison    65     1005 1995-06-03
+3  Arlene    50     1010 1999-06-11
+4    Alex    45     1009 1998-07-27
+5  Arthur    45     1010 1996-06-17
+6     Ana    40     1013 1997-06-30
+</code></pre>
+
+<p>Podemos ordenar las filas según varias variables:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/arrange2.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">storms</span></pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2    Alex    45     1009 1998-07-27
+3 Allison    65     1005 1995-06-03
+4     Ana    40     1013 1997-06-30
+5  Arlene    50     1010 1999-06-11
+6  Arthur    45     1010 1996-06-17
+</code></pre>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> arrange(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span>, <span class="pl-smi">date</span>)</pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1     Ana    40     1013 1997-06-30
+2  Arthur    45     1010 1996-06-17
+3    Alex    45     1009 1998-07-27
+4  Arlene    50     1010 1999-06-11
+5 Allison    65     1005 1995-06-03
+6 Alberto   110     1007 2000-08-03
+</code></pre>
+
+<h1>
+<a id="rename" class="anchor" href="#rename" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rename()</h1>
+
+<p>Renombrar una variable en un data frame es sorprendentemente en <strong>R</strong> muy difícil de realizar. La función <strong>rename()</strong> esta diseñada para hacer este proceso de una forma más fácil.  </p>
+
+<p>Echemos un vistazo a los nombres de las variables en el data frame <strong>storms</strong>:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> names(<span class="pl-smi">storms</span>)</pre></div>
+
+<pre><code>[1] "storm"    "wind"     "pressure" "date"    
+</code></pre>
+
+<p>Para cambiar los nombres de las variables en el data frame <strong>storms</strong> a castellano, podriamos hacerlo de la forma siguiente:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> rename(<span class="pl-smi">storms</span>, <span class="pl-v">tormenta</span> <span class="pl-k">=</span> <span class="pl-smi">storm</span>, <span class="pl-v">viento</span> <span class="pl-k">=</span> <span class="pl-smi">wind</span>, <span class="pl-v">presion</span> <span class="pl-k">=</span> <span class="pl-smi">pressure</span>, <span class="pl-v">fecha</span> <span class="pl-k">=</span> <span class="pl-smi">date</span> )</pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+  tormenta viento presion      fecha
+     (chr)  (int)   (int)     (date)
+1  Alberto    110    1007 2000-08-03
+2     Alex     45    1009 1998-07-27
+3  Allison     65    1005 1995-06-03
+4      Ana     40    1013 1997-06-30
+5   Arlene     50    1010 1999-06-11
+6   Arthur     45    1010 1996-06-17
+</code></pre>
+
+<h1>
+<a id="mutate" class="anchor" href="#mutate" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mutate()</h1>
+
+<p>Con la función <strong>mutate()</strong> podemos computar tranformaciones de variables en un data frame. A menudo, tendremos la necesidad de crear nuevas variables que se calculan a partir de variables existentes,<strong>mutate()</strong> nos proporciona una interface clara para realizar este tipo de operaciones.  </p>
+
+<p>Así por ejemplo si deseamos calcular el ratio entre <em>pressure</em> y <em>wind</em>:<br>
+<img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/mutate.PNG" alt="">  </p>
+
+<p>Echemos un vistazo al data frame <strong>storms</strong>:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">storms</span></pre></div>
+
+<pre><code>Source: local data frame [6 x 4]
+
+    storm  wind pressure       date
+    (chr) (int)    (int)     (date)
+1 Alberto   110     1007 2000-08-03
+2    Alex    45     1009 1998-07-27
+3 Allison    65     1005 1995-06-03
+4     Ana    40     1013 1997-06-30
+5  Arlene    50     1010 1999-06-11
+6  Arthur    45     1010 1996-06-17
+</code></pre>
+
+<p>A continuación podemos crear una nueva varible <strong>ratio</strong> con el ratio entre la presión y el viento:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> mutate(<span class="pl-smi">storms</span>, <span class="pl-v">ratio</span> <span class="pl-k">=</span> <span class="pl-smi">pressure</span><span class="pl-k">/</span><span class="pl-smi">wind</span>)</pre></div>
+
+<pre><code>Source: local data frame [6 x 5]
+
+    storm  wind pressure       date     ratio
+    (chr) (int)    (int)     (date)     (dbl)
+1 Alberto   110     1007 2000-08-03  9.154545
+2    Alex    45     1009 1998-07-27 22.422222
+3 Allison    65     1005 1995-06-03 15.461538
+4     Ana    40     1013 1997-06-30 25.325000
+5  Arlene    50     1010 1999-06-11 20.200000
+6  Arthur    45     1010 1996-06-17 22.444444
+</code></pre>
+
+<p>La función <strong>mutate()</strong> nos permite encadenar varias expresiones en una misma sentencia: </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/mutate1.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> mutate(<span class="pl-smi">storms</span>, <span class="pl-v">ratio</span><span class="pl-k">=</span><span class="pl-smi">pressure</span><span class="pl-k">/</span><span class="pl-smi">wind</span>, <span class="pl-v">inverse</span><span class="pl-k">=</span><span class="pl-smi">ratio</span><span class="pl-k">^-</span><span class="pl-c1">1</span>)</pre></div>
+
+<pre><code>Source: local data frame [6 x 6]
+
+    storm  wind pressure       date     ratio    inverse
+    (chr) (int)    (int)     (date)     (dbl)      (dbl)
+1 Alberto   110     1007 2000-08-03  9.154545 0.10923535
+2    Alex    45     1009 1998-07-27 22.422222 0.04459861
+3 Allison    65     1005 1995-06-03 15.461538 0.06467662
+4     Ana    40     1013 1997-06-30 25.325000 0.03948667
+5  Arlene    50     1010 1999-06-11 20.200000 0.04950495
+6  Arthur    45     1010 1996-06-17 22.444444 0.04455446
+</code></pre>
+
+<p>Podemos utilizar funciones de otros paquetes como resultado de una nueva columna/variable, así por ejemplo si queremos calcular la <em>distribución de frecuencias absolutas acumuladas</em> de la variable <em>wind</em> podríamos utilizar la función <em>cumsum()</em> del paquete <em>bas</em>:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> mutate(<span class="pl-smi">storms</span>, <span class="pl-v">freq.acumulative</span> <span class="pl-k">=</span> cumsum(<span class="pl-smi">wind</span>))</pre></div>
+
+<pre><code>Source: local data frame [6 x 5]
+
+    storm  wind pressure       date freq.acumulative
+    (chr) (int)    (int)     (date)            (int)
+1 Alberto   110     1007 2000-08-03              110
+2    Alex    45     1009 1998-07-27              155
+3 Allison    65     1005 1995-06-03              220
+4     Ana    40     1013 1997-06-30              260
+5  Arlene    50     1010 1999-06-11              310
+6  Arthur    45     1010 1996-06-17              355
+</code></pre>
+
+<h2>
+<a id="summarise" class="anchor" href="#summarise" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Summarise</h2>
+
+<p>La función <strong>summarise()</strong> funciona de forma análoga a la función <a href="mutate.md">mutate</a>, excepto que en lugar de añadir nuevas columnas crea un nuevo data frame.  </p>
+
+<p>Así por ejemplo, ara calcular la mediana y la varianza de la variable <em>amount</em> en el conjunto de datos <em>pollution</em>:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/summarise.PNG" alt="">  </p>
+
+<p>Echemos un vistazo al data frame <strong>pollution</strong>:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">pollution</span></pre></div>
+
+<pre><code>##       city  size amount
+## 1 New York large     23
+## 2 New York small     14
+## 3   London large     22
+## 4   London small     16
+## 5  Beijing large    121
+## 6  Beijing small     56
+</code></pre>
+
+<p>Para obtener un resumen con la mediana y la varianza de la variable <strong>amount</strong> podemos hacer lo siguiente:  </p>
+
+<div class="highlight highlight-source-r"><pre>summarise(<span class="pl-smi">pollution</span>, <span class="pl-v">mediana</span> <span class="pl-k">=</span> median(<span class="pl-smi">amount</span>), <span class="pl-v">variance</span> <span class="pl-k">=</span> var(<span class="pl-smi">amount</span>))</pre></div>
+
+<pre><code>##   mediana variance
+## 1    22.5   1731.6
+</code></pre>
+
+<p>Podemos utilizar el operador %&gt;%, </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/summarise1.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">pollution</span> %<span class="pl-k">&gt;</span>% summarise(<span class="pl-v">mediana</span> <span class="pl-k">=</span> median(<span class="pl-smi">amount</span>), <span class="pl-v">variance</span> <span class="pl-k">=</span> var(<span class="pl-smi">amount</span>))</pre></div>
+
+<pre><code>##   mediana variance
+## 1    22.5   1731.6
+</code></pre>
+
+<p>Obsérvese que las dos formas de hacerlo devuelven el mismo resultado.  </p>
+
+<p>A continuación se muestran funciones que trabajando conjuntamente con la función <strong>summarise()</strong> facilitarán nuestro trabajo diario. Las primeras pertenecen al paquete base y las otras son del paquete dplyr. Todas ellas toman como argumento un vector y devuelven un único resultado.  </p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">min(), max()</td>
+<td align="center">Valores max y min</td>
+</tr>
+<tr>
+<td align="center">mean()</td>
+<td align="center">media</td>
+</tr>
+<tr>
+<td align="center">median()</td>
+<td align="center">mediana</td>
+</tr>
+<tr>
+<td align="center">sum()</td>
+<td align="center">suma de los valores</td>
+</tr>
+<tr>
+<td align="center">var, sd()</td>
+<td align="center">varianza y desviación típica</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">dplyr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">first()</td>
+<td align="center">primer valor en un vector</td>
+</tr>
+<tr>
+<td align="center">last()</td>
+<td align="center">el último valor en un vector</td>
+</tr>
+<tr>
+<td align="center">n()</td>
+<td align="center">el número de valores en un vector</td>
+</tr>
+<tr>
+<td align="center">n_distinct()</td>
+<td align="center">el número de valores distintos en un vector</td>
+</tr>
+<tr>
+<td align="center">nth()</td>
+<td align="center">Extrar el valor que ocupa la posición <em>n</em> en un vector</td>
+</tr>
+</tbody>
+</table>
+
+<h1>
+<a id="group_by" class="anchor" href="#group_by" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>group_by()</h1>
+
+<p>La función <strong>group_by()</strong>  agrupa un conjunto de filas seleccionado en un conjunto de filas de resumen de acuerdo con los valores de una o más columnas o expresiones.</p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/groupby.PNG" alt="">  </p>
+
+<p>Echemos un vistazo al data frame <strong>pollution</strong>:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">pollution</span></pre></div>
+
+<pre><code>      city  size amount
+1 New York large     23
+2 New York small     14
+3   London large     22
+4   London small     16
+5  Beijing large    121
+6  Beijing small     56
+</code></pre>
+
+<p>Agrupemos las observaciones por la variable <strong>city</strong>:  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> group_by(<span class="pl-smi">pollution</span>, <span class="pl-smi">city</span>)</pre></div>
+
+<pre><code>Source: local data frame [6 x 3]
+Groups: city [3]
+
+      city  size amount
+     (chr) (chr)  (dbl)
+1 New York large     23
+2 New York small     14
+3   London large     22
+4   London small     16
+5  Beijing large    121
+6  Beijing small     56
+</code></pre>
+
+<p>La función <strong>group_by()</strong> es extremadamente útil trabajando en conjunción con la función <strong>summarise()</strong>:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/groupbySummarise.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">pollution</span> %<span class="pl-k">&gt;</span>%  group_by(<span class="pl-smi">city</span>) %<span class="pl-k">&gt;</span>% 
+<span class="pl-k">+</span>   summarise(<span class="pl-v">mean</span> <span class="pl-k">=</span> mean(<span class="pl-smi">amount</span>), <span class="pl-v">sum</span> <span class="pl-k">=</span> sum(<span class="pl-smi">amount</span>), <span class="pl-v">n</span> <span class="pl-k">=</span> n())</pre></div>
+
+<pre><code>Source: local data frame [3 x 4]
+
+      city  mean   sum     n
+     (chr) (dbl) (dbl) (int)
+1  Beijing  88.5   177     2
+2   London  19.0    38     2
+3 New York  18.5    37     2
+</code></pre>
+
+<h2>
+<a id="el-operador-pipe-" class="anchor" href="#el-operador-pipe-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>El operador pipe %&gt;%</h2>
+
+<p>El operador pipeline <strong>%&gt;%</strong> es útil para concatenar múltiples <em>dplyr</em> operaciones. Obsérvese en el siguiente ejemplo, que cada vez que queremos aplicar mas de una función, la instrucción es una secuencia de llamadas a funciones de forma anidada y que resulta ilegible:  </p>
+
+<div class="highlight highlight-source-r"><pre>third(second(first(<span class="pl-smi">x</span>)))</pre></div>
+
+<p>Este anidamiento no es una forma natural de expresar un secuencia de operaciones. El operador <strong>%&gt;%</strong> nos permite escribir una secuencia de operaciones de izquierda a derecha:  </p>
+
+<div class="highlight highlight-source-r"><pre>first(<span class="pl-smi">x</span>) %<span class="pl-k">&gt;</span>% second(<span class="pl-smi">x</span>) %<span class="pl-k">&gt;</span>% third(<span class="pl-smi">x</span>)</pre></div>
+
+<p>Obsérvese que las siguientes instrucciones, </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipeline.PNG" alt="">  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipeline1.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-smi">storm</span>, <span class="pl-smi">pressure</span>)</pre></div>
+
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##     storm pressure
+##     (chr)    (int)
+## 1 Alberto     1007
+## 2    Alex     1009
+## 3 Allison     1005
+## 4     Ana     1013
+## 5  Arlene     1010
+## 6  Arthur     1010
+</code></pre>
+
+<div class="highlight highlight-source-r"><pre>filter(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">50</span>)</pre></div>
+
+<pre><code>## Source: local data frame [3 x 4]
+## 
+##     storm  wind pressure       date
+##     (chr) (int)    (int)     (date)
+## 1 Alberto   110     1007 2000-08-03
+## 2 Allison    65     1005 1995-06-03
+## 3  Arlene    50     1010 1999-06-11
+</code></pre>
+
+<p>es lo mismo que,  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">storms</span> %<span class="pl-k">&gt;</span>% select(<span class="pl-smi">storm</span>, <span class="pl-smi">pressure</span>)</pre></div>
+
+<pre><code>## Source: local data frame [6 x 2]
+## 
+##     storm pressure
+##     (chr)    (int)
+## 1 Alberto     1007
+## 2    Alex     1009
+## 3 Allison     1005
+## 4     Ana     1013
+## 5  Arlene     1010
+## 6  Arthur     1010
+</code></pre>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">storms</span> %<span class="pl-k">&gt;</span>% filter(<span class="pl-smi">wind</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">50</span>)</pre></div>
+
+<pre><code>## Source: local data frame [3 x 4]
+## 
+##     storm  wind pressure       date
+##     (chr) (int)    (int)     (date)
+## 1 Alberto   110     1007 2000-08-03
+## 2 Allison    65     1005 1995-06-03
+## 3  Arlene    50     1010 1999-06-11
+</code></pre>
+
+<p>Es en el siguiente ejemplo donde podemos observar el verdadero potencial del operador pipeline:  </p>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipeline2.PNG" alt="">  </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">storms</span> %<span class="pl-k">&gt;</span>%
+  filter(<span class="pl-smi">wind</span><span class="pl-k">&gt;</span><span class="pl-k">=</span><span class="pl-c1">50</span>) %<span class="pl-k">&gt;</span>%
+  select(<span class="pl-smi">storm</span>, <span class="pl-smi">pressure</span>)</pre></div>
+
+<pre><code>## Source: local data frame [3 x 2]
+## 
+##     storm pressure
+##     (chr)    (int)
+## 1 Alberto     1007
+## 2 Allison     1005
+## 3  Arlene     1010
+</code></pre>
+
+<blockquote>
+<p>El atajo de teclado para el operador <strong>%&gt;%</strong> es  </p>
+</blockquote>
+
+<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipelineShortcut.PNG" alt=""></p>
 
 <h4>
 <a id="rubén-sánchez-sancho" class="anchor" href="#rub%C3%A9n-s%C3%A1nchez-sancho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rubén Sánchez Sancho</h4>
