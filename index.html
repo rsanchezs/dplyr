@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dplyr by rsanchezs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Dplyr</h1>
+      <h2 class="project-tagline">Curso del paquete dplyr</h2>
+      <a href="https://github.com/rsanchezs/dplyr" class="btn">View on GitHub</a>
+      <a href="https://github.com/rsanchezs/dplyr/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/rsanchezs/dplyr/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="manipulación-de-datos-en-r-con-dplyr" class="anchor" href="#manipulaci%C3%B3n-de-datos-en-r-con-dplyr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manipulación de datos en R con dplyr</h1>
+
+<p><img src="https://rstudioblog.files.wordpress.com/2014/10/datacamp-dplyr.png?w=539&amp;h=311" alt=""></p>
+
+<h1>
+<a id="data-frames" class="anchor" href="#data-frames" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Data frames</h1>
+
+<p>El <strong>data frame</strong> es una estructura de datos muy importante en <strong>R</strong>. La estructura de un data frame consiste en que cada fila representa un observación y que cada columna representa una variable, medida o característica de dicha observación.</p>
+
+<p>Dada la importancia de los data frames, es importante poseer un conjunto de herramientas para trabajar con los mismos. En capítulos anteriores hemos discutido algunas herramientas como la función <strong><em>subset()</em></strong> y el uso de los operadores <strong><em>[</em></strong> y <strong><em>$</em></strong> para extraer subconjuntos de datos en data frames. Sin embargo, otras operaciones, como filtros, reordenar, etc. pueden ser a menudo una labor tediosa. El paquete <strong>dplyr</strong> esta diseñado para mitigar muchos de los problemas y proporcionarnos un conjunto de rutinas altamente optimizadas para el manejo de data frames. </p>
+
+<h1>
+<a id="el-paquete-dplyr" class="anchor" href="#el-paquete-dplyr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>El paquete dplyr</h1>
+
+<p>El paquete <strong>dplyr</strong> fue desarrollado por Hadley Wickham de RStudio y es un versión optimizada de su paquete <strong>plyr</strong>. El paquete <strong>dplyr</strong> no proporciona ninguna nueva funcionalidad a <strong>R</strong> per se, en el sentido que todo aquello que podemos hacer con <strong>dplyr</strong> lo podríamos hacer con la sintaxis básica de <strong>R</strong>.</p>
+
+<p>Una importante contribución del paquete <strong>dplyr</strong> es que proporciona una "gramática" (particularmente verbos) para la manipulación y operaciones con data frames. Con esta gramática podemos comunicar mediante nuestro código que es lo que estamos haciendo en los data frames a otras personas (asumiendo que conozcan la gramática). Esto es muy útil, ya que proporciona una abstracción que anteriormente no existía. Por último, cabe destacar que las funciones del paquete <strong>dplyr</strong> son muy rápidas, puesto que están implementadas con el lenguaje C++.</p>
+
+<h1>
+<a id="la-grámatica-de-dplyr" class="anchor" href="#la-gr%C3%A1matica-de-dplyr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>La grámatica de dplyr</h1>
+
+<p>Algunas de los principales "verbos" del paquete <strong>dplyr</strong> son:</p>
+
+<ul>
+<li>
+<strong><em>select</em></strong>: devuelve un conjunto de columnas</li>
+<li>
+<strong><em>filter</em></strong>: devuelve un conjunto de filas según una o varias condiciones lógicas</li>
+<li>
+<strong><em>arrange</em></strong>: reordena filas de un data frame</li>
+<li>
+<strong><em>rename</em></strong>: renombra variables en una data frame</li>
+<li>
+<strong><em>mutate</em></strong>: añade nuevas variables/columnas o transforma variables existentes</li>
+<li>
+<strong><em>summarise/summarize</em></strong>: genera resúmenes estadísticos de diferentes variables en el data frame, posiblemente con <em>strata</em>
+</li>
+<li>
+<em>__%&gt;%_</em> : el operador "pipe"  es usado para conectar múltiples acciones en una única "pipeline" (tubería)</li>
+</ul>
+
+<h1>
+<a id="argumentos-comúnes-en-las-funciones-dplyr" class="anchor" href="#argumentos-com%C3%BAnes-en-las-funciones-dplyr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Argumentos comúnes en las funciones dplyr</h1>
+
+<p>Todas las funciones que discutiremos en este curso tienen en común una serie de argumentos. En particular,</p>
+
+<ol>
+<li>El primer argumento es el data frame</li>
+<li>Los otros argumentos describen que hacer con el data frame especificado en el primer argumento, podemos referirnos a las columnas en el data frame directamente sin utilizar el operador $, es decir sólo con el nombre de la columna/variable.</li>
+<li>El valor de retorno es un nuevo data frame.</li>
+<li> Los data frames deben estar bien organizados/estructurados, es decir debe existir una observación por columna y, cada columna representar una variable, medida o característica de esa observación. Para ello, es muy útil es uso del paquete <strong>tidy</strong>. (lo veremos en capítulos posteriores).</li>
+</ol>
+
+<h1>
+<a id="instalación-del-paquete-dplyr" class="anchor" href="#instalaci%C3%B3n-del-paquete-dplyr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalación del paquete <strong>dplyr</strong>
+</h1>
+
+<p>Podemos instalar el paquete desde CRAN o desde GitHub.</p>
+
+<pre><code>## Instalación desde CRAN
+install.packages("dplyr")
+
+</code></pre>
+
+<pre><code>## Instalación desde GitHub
+library(devtools)
+install_github("hadley/dplyr")
+
+</code></pre>
+
+<p>Después de la instalación es importante que lo carguemos en nuestra sesión <strong>R</strong> :</p>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">dplyr</span>)</pre></div>
+
+<p>Es posible que cuando carguemos el paquete nos aparezcan una serie de <em>warnings</em>, esto es debido que el paquete tiene funciones con el mismo nombre que en otros paquetes. Por el momento haremos caso omiso  a estos avisos.</p>
+
+<p>Recomendamos consultar la documentación de las funciones:</p>
+
+<div class="highlight highlight-source-r"><pre>?<span class="pl-smi">select</span>
+?<span class="pl-smi">filter</span>
+?<span class="pl-smi">arrange</span>
+?<span class="pl-smi">mutate</span>
+?<span class="pl-smi">summarise</span>
+?<span class="pl-smi">group_by</span></pre></div>
+
+<h4>
+<a id="rubén-sánchez-sancho" class="anchor" href="#rub%C3%A9n-s%C3%A1nchez-sancho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rubén Sánchez Sancho</h4>
+
+<p><a href="mailto:rsanchezs@live.com">rsanchezs@live.com</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/rsanchezs/dplyr">Dplyr</a> is maintained by <a href="https://github.com/rsanchezs">rsanchezs</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
