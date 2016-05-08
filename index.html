@@ -166,7 +166,7 @@ View(<span class="pl-smi">tb</span>)</pre></div>
 
 <p>Con el guión <strong>-</strong> podemos excluir una columna:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/select1.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/select1.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-k">-</span><span class="pl-smi">storm</span>)</pre></div>
 
@@ -184,7 +184,7 @@ View(<span class="pl-smi">tb</span>)</pre></div>
 
 <p>Podemos utilizar la notación <strong>:</strong> para seleccionar un rango de columnas:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/select2.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/select2.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span><span class="pl-k">:</span><span class="pl-smi">date</span>)</pre></div>
 
@@ -332,7 +332,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>La función <strong>filter</strong> nos permite filtrar filas según una condición:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/filter.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/filter.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> filter(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">50</span>)</pre></div>
 
@@ -347,7 +347,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>Se pueden incluir varias condiciones en un mismo filtro: </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/filter1.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/filter1.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> filter(<span class="pl-smi">storms</span>, <span class="pl-smi">wind</span> <span class="pl-k">&gt;</span><span class="pl-k">=</span> <span class="pl-c1">50</span>, <span class="pl-smi">storm</span> <span class="pl-k">%in%</span> c(<span class="pl-s"><span class="pl-pds">"</span>Alberto<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Alex<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Allison<span class="pl-pds">"</span></span>))</pre></div>
 
@@ -462,7 +462,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>Por defecto <strong>arrange()</strong> ordena las filas por orden ascendente:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/arrange.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/arrange.PNG" alt="">  </p>
 
 <p>Echemos un vistazo al data frame <strong>arrange</strong>:</p>
 
@@ -498,7 +498,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>Si las queremos ordenar de forma ascendente lo haremos del siguiente modo:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/arrange1.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/arrange1.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> arrange(<span class="pl-smi">storms</span>, desc(<span class="pl-smi">wind</span>))</pre></div>
 
@@ -516,7 +516,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>Podemos ordenar las filas según varias variables:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/arrange2.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/arrange2.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">storms</span></pre></div>
 
@@ -580,7 +580,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 <p>Con la función <strong>mutate()</strong> podemos computar tranformaciones de variables en un data frame. A menudo, tendremos la necesidad de crear nuevas variables que se calculan a partir de variables existentes,<strong>mutate()</strong> nos proporciona una interface clara para realizar este tipo de operaciones.  </p>
 
 <p>Así por ejemplo si deseamos calcular el ratio entre <em>pressure</em> y <em>wind</em>:<br>
-<img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/mutate.PNG" alt="">  </p>
+<img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/mutate.PNG" alt="">  </p>
 
 <p>Echemos un vistazo al data frame <strong>storms</strong>:</p>
 
@@ -616,7 +616,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>La función <strong>mutate()</strong> nos permite encadenar varias expresiones en una misma sentencia: </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/mutate1.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/mutate1.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> mutate(<span class="pl-smi">storms</span>, <span class="pl-v">ratio</span><span class="pl-k">=</span><span class="pl-smi">pressure</span><span class="pl-k">/</span><span class="pl-smi">wind</span>, <span class="pl-v">inverse</span><span class="pl-k">=</span><span class="pl-smi">ratio</span><span class="pl-k">^-</span><span class="pl-c1">1</span>)</pre></div>
 
@@ -655,7 +655,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>Así por ejemplo, ara calcular la mediana y la varianza de la variable <em>amount</em> en el conjunto de datos <em>pollution</em>:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/summarise.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/summarise.PNG" alt="">  </p>
 
 <p>Echemos un vistazo al data frame <strong>pollution</strong>:  </p>
 
@@ -680,7 +680,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>Podemos utilizar el operador %&gt;%, </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/summarise1.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/summarise1.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-smi">pollution</span> %<span class="pl-k">&gt;</span>% summarise(<span class="pl-v">mediana</span> <span class="pl-k">=</span> median(<span class="pl-smi">amount</span>), <span class="pl-v">variance</span> <span class="pl-k">=</span> var(<span class="pl-smi">amount</span>))</pre></div>
 
@@ -759,7 +759,7 @@ select(<span class="pl-smi">storms</span>, contains(<span class="pl-s"><span cla
 
 <p>La función <strong>group_by()</strong>  agrupa un conjunto de filas seleccionado en un conjunto de filas de resumen de acuerdo con los valores de una o más columnas o expresiones.</p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/groupby.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/groupby.PNG" alt="">  </p>
 
 <p>Echemos un vistazo al data frame <strong>pollution</strong>:</p>
 
@@ -793,7 +793,7 @@ Groups: city [3]
 
 <p>La función <strong>group_by()</strong> es extremadamente útil trabajando en conjunción con la función <strong>summarise()</strong>:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/groupbySummarise.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/groupbySummarise.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-k">&gt;</span> <span class="pl-smi">pollution</span> %<span class="pl-k">&gt;</span>%  group_by(<span class="pl-smi">city</span>) %<span class="pl-k">&gt;</span>% 
 <span class="pl-k">+</span>   summarise(<span class="pl-v">mean</span> <span class="pl-k">=</span> mean(<span class="pl-smi">amount</span>), <span class="pl-v">sum</span> <span class="pl-k">=</span> sum(<span class="pl-smi">amount</span>), <span class="pl-v">n</span> <span class="pl-k">=</span> n())</pre></div>
@@ -820,9 +820,9 @@ Groups: city [3]
 
 <p>Obsérvese que las siguientes instrucciones, </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipeline.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/pipeline.PNG" alt="">  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipeline1.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/pipeline1.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre>select(<span class="pl-smi">storms</span>, <span class="pl-smi">storm</span>, <span class="pl-smi">pressure</span>)</pre></div>
 
@@ -878,7 +878,7 @@ Groups: city [3]
 
 <p>Es en el siguiente ejemplo donde podemos observar el verdadero potencial del operador pipeline:  </p>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipeline2.PNG" alt="">  </p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/pipeline2.PNG" alt="">  </p>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-smi">storms</span> %<span class="pl-k">&gt;</span>%
   filter(<span class="pl-smi">wind</span><span class="pl-k">&gt;</span><span class="pl-k">=</span><span class="pl-c1">50</span>) %<span class="pl-k">&gt;</span>%
@@ -897,7 +897,7 @@ Groups: city [3]
 <p>El atajo de teclado para el operador <strong>%&gt;%</strong> es  </p>
 </blockquote>
 
-<p><img src="https://github.com/rsanchezs/dplyr/blob/master/chapter1/pipelineShortcut.PNG" alt=""></p>
+<p><img src="https://rsanchezs.gitbooks.io/dplyr/content/chapter1/pipelineShortcut.PNG" alt=""></p>
 
 <h4>
 <a id="rubén-sánchez-sancho" class="anchor" href="#rub%C3%A9n-s%C3%A1nchez-sancho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rubén Sánchez Sancho</h4>
